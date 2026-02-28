@@ -1,10 +1,6 @@
-Here is your **updated, professionally structured and technically polished README.md** with clearer explanations, better academic framing, improved flow, and stronger justification.
-
-You can directly replace your existing README with this version.
-
 ---
 
-# 🏫 Intelligent Physical Education Assessment System
+# 🏫 Physical Education Assessment System
 
 **Version 2.0 – Ensemble Machine Learning Framework**
 
@@ -57,7 +53,7 @@ The architecture supports execution on a single workstation or scaled out over a
 
 ---
 
-# 🧠 Core Modeling Strategy (Deep Learning & Big Data Perspective)
+# 🧠 Core Modeling Strategy (Deep Learning & Big Data)
 
 Because the underlying dataset may grow rapidly as more student records are collected, the modeling strategy is designed to be flexible and robust. In particular, the framework mixes:
 
