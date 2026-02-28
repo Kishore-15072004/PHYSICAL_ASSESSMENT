@@ -1,0 +1,41 @@
+============================================================
+      PHYSICAL EDUCATION DIAGNOSTIC ASSESSMENT REPORT
+      Generated on: 2026-02-27 23:36:56
+============================================================
+
+--- CORE METRICS & DIAGNOSTICS ---
+FINAL SCORE               : 83.59%
+Primary Positive Influencer: Endurance
+Major Negative Factor     : Screen Time
+------------------------------------------------------------
+
+--- USER INPUT DATA ---
+Attendance               : 57.0
+Endurance                : 89.0
+Strength                 : 86.0
+Flexibility              : 76.0
+Participation            : 87.0
+Skill Speed              : 90.0
+Physical Progress        : 90.0
+Motivation               : 4 (Developing)
+Stress Level             : 5 (Moderate)
+Self Confidence          : 4 (Developing)
+Focus                    : 6 (Steady)
+Teamwork                 : 4 (Developing)
+Peer Support             : 6 (Average)
+Communication            : 6 (Clear)
+Sleep Quality            : 6 (Fair (5-7 hrs))
+Nutrition                : 6 (Balanced)
+Screen Time              : 5 (Moderate (3-5 hrs))
+
+------------------------------------------------------------
+TOP STRENGTHS: Endurance, Strength
+FOCUS AREAS  : Attendance, Motivation, Self Confidence, Focus, Teamwork, Peer Support, Communication, Screen Time
+
+RECOMMENDED ACTION PLAN:
+• To improve attendance and motivation, establish a consistent workout routine and set achievable goals, rewarding yourself for each milestone reached.
+• To boost self_confidence, focus, teamwork, peer_support, communication, and reduce screen_time, engage in group fitness activities that promote social interaction and accountability, such as team sports or fitness classes.
+• Use a digital planner to set reminders 15 minutes before PE sessions.
+
+============================================================
+END OF REPORT

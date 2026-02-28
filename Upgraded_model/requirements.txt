@@ -1,0 +1,44 @@
+# Python version
+
+# Core scientific libraries
+
+# Explainability
+
+# Spark for preprocessing and feature analysis
+
+# Recommendation engine dependencies
+
+# Utilities
+# pickle is part of the standard library
+
+# Optional (if running notebooks or additional analysis)
+# jupyter
+
+# Add XGBoost for improved gradient boosting performance
+## Requirements for the Upgraded_model project
+
+# Core language
+# Python 3.10+
+
+# Core scientific libraries
+numpy>=1.23,<2.0
+pandas>=1.5,<2.0
+matplotlib>=3.5,<4.0
+scikit-learn>=1.2,<2.0
+
+# Explainability
+shap>=0.41,<0.50
+
+# Spark for preprocessing and feature analysis (optional)
+pyspark>=3.3,<4.0
+findspark>=2.0
+
+# Optional utilities
+python-dotenv>=1.0
+
+# XGBoost (added for ensemble)
+xgboost>=1.7,<2.0
+
+# Notes:
+# - Remove or pin versions as needed for your environment.
+# - 'groq' integration is optional and removed from core requirements.

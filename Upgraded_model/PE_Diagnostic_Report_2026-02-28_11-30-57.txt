@@ -1,0 +1,42 @@
+============================================================
+      PHYSICAL EDUCATION DIAGNOSTIC ASSESSMENT REPORT
+      Generated on: 2026-02-28 11:30:57
+============================================================
+
+--- CORE METRICS & DIAGNOSTICS ---
+FINAL SCORE               : 64.48%
+Primary Positive Influencer: Attendance
+Major Negative Factor     : Motivation
+------------------------------------------------------------
+
+--- USER INPUT DATA ---
+Attendance               : 50.0
+Endurance                : 40.0
+Strength                 : 40.0
+Flexibility              : 40.0
+Participation            : 59.0
+Skill Speed              : 40.0
+Physical Progress        : 59.0
+Motivation               : 9 (Strong)
+Stress Level             : 2 (Low (Calm))
+Self Confidence          : 6 (Average)
+Focus                    : 6 (Steady)
+Teamwork                 : 6 (Average)
+Peer Support             : 6 (Average)
+Communication            : 6 (Clear)
+Sleep Quality            : 6 (Fair (5-7 hrs))
+Nutrition                : 6 (Balanced)
+Screen Time              : 5 (Moderate (3-5 hrs))
+
+------------------------------------------------------------
+TOP STRENGTHS: Motivation, Stress Level
+FOCUS AREAS  : Attendance, Endurance, Strength, Flexibility, Participation, Skill Speed, Physical Progress, Self Confidence, Focus, Teamwork, Peer Support, Communication, Screen Time
+
+RECOMMENDED ACTION PLAN:
+• To improve endurance, incorporate more cardio activities into your daily routine, such as jogging or cycling, and gradually increase the duration and intensity over time to challenge yourself and build stamina.
+• To boost strength, focus on resistance training exercises like push-ups, squats, and lunges, and aim to work out different muscle groups on different days to allow for proper recovery and muscle growth.
+• Use a digital planner to set reminders 15 minutes before PE sessions.
+• Perform 20 minutes of light jogging 3x per week.
+
+============================================================
+END OF REPORT
