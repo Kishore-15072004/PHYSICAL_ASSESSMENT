@@ -1,8 +1,3 @@
-Here is your **updated, professionally structured and technically polished README.md** with clearer explanations, better academic framing, improved flow, and stronger justification.
-
-You can directly replace your existing README with this version.
-
----
 
 # 🏫 Intelligent Physical Education Assessment System
 
@@ -476,16 +471,4 @@ This system is:
 ✔ Academically strong
 ✔ Practically deployable
 
-It moves beyond simple PE grading into **intelligent performance diagnostics and personalized coaching analytics**.
 
----
-
-If you want, I can also provide:
-
-* IEEE-style documentation version
-* Research paper format
-* PPT-ready content
-* Architecture diagram
-* Viva explanation script
-
-Just tell me 🚀
