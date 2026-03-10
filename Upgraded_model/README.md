@@ -514,12 +514,4 @@ It moves beyond simple PE grading into **intelligent performance diagnostics and
 
 ---
 
-If you want, I can also provide:
 
-* IEEE-style documentation version
-* Research paper format
-* PPT-ready content
-* Architecture diagram
-* Viva explanation script
-
-Just tell me 🚀
