@@ -1,291 +1,351 @@
 
 ---
 
-# 🏫 Physical Education Assessment System
+# 🏫 Physical Education Diagnostic Assessment System
 
-**Version 2.0 – Ensemble Machine Learning Framework**
+**Version 3.0 – Big Data Ensemble Learning & Explainable AI Framework**
 
 ---
 
-## 📌 Project Overview
+# 📌 Project Overview
 
-The **Intelligent Physical Education (PE) Assessment System** is a big–data, multi-model machine learning framework engineered to process and predict student Physical Education performance scores using both **physical performance metrics** and **psychological/social indicators**.
+The **Intelligent Physical Education Diagnostic Assessment System** is an advanced **machine learning and big-data analytics framework** designed to evaluate and predict student **Physical Education (PE) performance scores** using both **physical performance metrics** and **psychological/social attributes**.
 
-Built with scalability in mind, the pipeline leverages Apache Spark to handle datasets ranging from thousands to millions of records, and the modular design can be deployed on a cluster or in the cloud for horizontal scaling. It also lays the groundwork for future streaming ingestion of live assessment data.
+Traditional PE grading systems rely mainly on physical test results such as endurance or strength. However, modern research shows that **student performance is influenced by multiple behavioral and environmental factors**, including motivation, stress levels, teamwork, sleep quality, and nutrition.
 
-Unlike traditional grading systems that rely only on raw physical marks, this system:
+To address this limitation, the proposed system integrates **multidimensional data sources** and applies **machine learning ensemble techniques** to generate more accurate and explainable performance predictions.
 
-* Integrates 17 multidimensional attributes
-* Uses a hybrid ensemble of 6 predictive models (including deep learning)
-* Employs distributed preprocessing and feature analysis via PySpark for big‑data workflows
-* Provides explainable AI analysis (SHAP)
-* Generates personalized coaching recommendations
-* Produces structured diagnostic reports
+The framework processes **17 features** that represent physical, behavioral, and lifestyle characteristics of students and uses a **hybrid ensemble of machine learning and neural network models** to estimate the final PE performance score.
 
-The system is designed for **academic institutions, PE instructors, educational analytics research, and any organisation working with large-scale student health and performance data**.
+The system architecture is designed with **Big Data scalability** in mind. Using **Apache Spark for distributed preprocessing and feature analysis**, the system can efficiently process datasets ranging from **thousands to millions of student records** without modification.
+
+Beyond prediction, the system provides:
+
+• **Explainable AI analysis** to identify influential factors affecting performance
+• **Diagnostic assessment reports** for instructors and students
+• **Personalized training recommendations** based on predicted results
+• **Scalable big-data processing pipelines** suitable for institutional deployment
+
+The system can be deployed in:
+
+• Schools and universities
+• Educational analytics research
+• Sports science departments
+• Institutional student health monitoring systems
+
+---
+
+# 🎯 System Objectives
+
+The primary objectives of the system are:
+
+1. **Predict student PE performance scores accurately** using ensemble machine learning models.
+2. **Incorporate psychological and behavioral factors** into physical performance evaluation.
+3. **Provide explainable AI insights** to help instructors understand performance drivers.
+4. **Generate personalized recommendations** for improving student physical fitness.
+5. **Enable scalable big-data processing** for large educational datasets.
 
 ---
 
 # 🏗️ System Architecture
 
-## 🔁 End-to-End Data Flow (Big Data Ready)
+## 🔁 End-to-End Data Pipeline
 
 ```
-Raw Dataset (CSV / Parquet / Streaming)
-   ↓
-Distributed Data Cleaning & Normalization (PySpark)
-   ↓
-Feature Analysis & Correlation Study (Spark DataFrames)
-   ↓
-Model Training (6 Models; BPNN trained on GPUs/TPUs for deep learning)
-   ↓
-Weighted Ensemble Combination
-   ↓
-Batch or Real-time Prediction
-   ↓
-SHAP Explainability
-   ↓
-Personalized Recommendations
-   ↓
+Student Dataset (CSV / Parquet)
+        │
+        ▼
+Distributed Data Cleaning
+(PySpark)
+        │
+        ▼
+Feature Engineering
+& Normalization
+        │
+        ▼
+Feature Correlation Analysis
+(Spark DataFrames)
+        │
+        ▼
+Model Training
+(BPNN + Random Forest + XGBoost)
+        │
+        ▼
+Ensemble Prediction
+        │
+        ▼
+Hybrid Explainable AI
+(Correlation + Permutation Feature Importance)
+        │
+        ▼
 Diagnostic Report Generation
+        │
+        ▼
+Personalized Coaching Recommendations
 ```
 
-The architecture supports execution on a single workstation or scaled out over a Spark cluster. Heavy processing steps (preprocessing, feature analysis) are implemented using Spark APIs so that data of arbitrary size can be handled without modification. The deep learning component is written in NumPy but can be replaced with a framework (TensorFlow/PyTorch) when GPU acceleration or larger networks are required.
+This architecture supports both:
+
+* **Standalone execution on a single machine**
+* **Distributed processing on a Spark cluster**
+
+Heavy data preprocessing steps are executed using **Spark APIs**, enabling the system to handle **large-scale datasets efficiently**.
 
 ---
 
-# 🧠 Core Modeling Strategy (Deep Learning & Big Data)
+# 🧠 Core Modeling Strategy
 
-Because the underlying dataset may grow rapidly as more student records are collected, the modeling strategy is designed to be flexible and robust. In particular, the framework mixes:
+To ensure robust prediction performance, the system combines **deep learning and ensemble machine learning techniques**.
 
-* **Deep Learning (Neural Network)** – capable of learning complex nonlinear relationships and scaling with data volume; the BPNN serves as a prototype for migrating to larger networks or GPU‑accelerated frameworks.
-* **Tree-Based Models** – ensemble methods (Random Forest, Gradient Boosting, XGBoost) that naturally parallelize across features and examples and can ingest large tabular data with minimal preprocessing.
-* **Kernel-Based Models** – SVR provides a complementary perspective by optimising margins in high-dimensional feature spaces; applicable when dimensionality is high but sample sizes remain manageable after sampling.
-* **Linear Models** – fast, interpretable baselines that help sanity‑check the data and anchor the ensemble.
+Different algorithms capture **different patterns in the data**, so combining them improves prediction accuracy and generalization ability.
 
-This hybrid ensemble approach increases:
+The framework integrates three complementary model families:
 
-* Accuracy – combining strengths of multiple learners mitigates individual weaknesses
-* Stability – ensemble averages reduce variance and improve performance on unseen data
-* Generalization ability – diversity in model families helps the system adapt to distributional shifts
-* Robustness to noisy inputs – algorithms like tree ensembles are tolerant of outliers, while the neural net can learn to ignore irrelevant features
+### 1. Neural Networks
 
-Moreover, having multiple model types allows the system to be deployed in batch big‑data pipelines or in a low‑latency prediction service by selecting the appropriate subset of models.
+Used for learning **complex nonlinear interactions** between physical and psychological attributes.
+
+### 2. Tree-Based Ensemble Models
+
+Capture **feature interactions and nonlinear relationships** without requiring heavy preprocessing.
+
+### 3. Boosting Models
+
+Improve prediction accuracy by **iteratively correcting previous errors**.
+
+Combining these approaches creates a **balanced ensemble system** capable of:
+
+• High prediction accuracy
+• Reduced model bias
+• Lower variance
+• Better robustness to noisy inputs
+• Improved generalization across different student populations
 
 ---
 
-# 🤖 Models Used & Detailed Justification
+# 🤖 Machine Learning Models Used
+
+The system uses **three major predictive models**.
 
 ---
 
-## 1️⃣ Back-Propagation Neural Network (BPNN)
+# 1️⃣ Back-Propagation Neural Network (BPNN)
 
-### 🎯 Role
+## 🎯 Role
 
-Primary deep learning model to capture complex non-linear relationships.
+The **BPNN model** serves as the **deep learning component** of the system and captures complex nonlinear relationships between features.
 
-### 🏗 Architecture
+Physical performance is rarely linear. For example:
 
-* Input Layer: 17 neurons
-* Hidden Layer: 16 neurons (ReLU activation)
-* Output Layer: 1 neuron (Score 0–100)
+• High motivation may improve endurance results
+• Poor sleep quality may reduce physical progress
+• Stress can affect strength and participation
 
-### ⚙ Hyperparameters
+Neural networks can model these hidden relationships.
+
+---
+
+## 🏗 Network Architecture
 
 ```
-Learning Rate: 0.0005
-Epochs: 200
-Batch Size: 256
-Activation: ReLU
-Gradient Clipping: ±1.0
+Input Layer : 17 neurons
+Hidden Layer : 16 neurons
+Activation : ReLU
+Output Layer : 1 neuron
+Output : Predicted PE Score (0–100)
 ```
 
-### 🛠 Training Notes
+---
 
-* Implemented in pure NumPy for portability; scales with data in batches. For very large datasets it can be rewritten using TensorFlow/PyTorch and executed on GPUs/TPUs.
-* Batch size and epochs were chosen to strike a balance between convergence speed and memory use on commodity hardware.
-### ✅ Why Selected
+## ⚙ Hyperparameters
 
-* Captures nonlinear feature interactions that simpler models miss
-* Models psychological–physical dependencies where relationships are not additive
-* Learns hidden performance patterns without manual feature engineering
-* Well suited for regression tasks with sufficient training data
-* Demonstrates how to apply a deep learning technique on tabular, big‑data features; the same architecture can be scaled up or replaced by a TensorFlow/PyTorch model when GPU acceleration is available
-
-### 📊 Performance
-
-* RMSE: ~2–3%
-* R²: ~0.85–0.90
-
-> **Big Data note:** the network is deliberately shallow to keep training time reasonable on CPU. In a true big‑data environment, this component would be retrained on distributed GPUs or TPUs and might grow deeper.
+```
+Learning Rate : 0.0005
+Epochs : 200
+Batch Size : 256
+Activation Function : ReLU
+Gradient Clipping : ±1.0
+```
 
 ---
 
-## 2️⃣ Random Forest Regressor
+## 🛠 Implementation
 
-### 🎯 Role
+The BPNN is implemented using **NumPy** to ensure:
 
-Bagging-based ensemble for stable and variance-reduced predictions.
+• Lightweight implementation
+• Easy portability
+• Full control over training procedure
 
-### ⚙ Configuration
+In large-scale deployments, the model can be migrated to:
 
-* 100 Trees
-* Max Depth: 15
-* Min Samples Split: 5
+• TensorFlow
+• PyTorch
 
-### 🛠 Training Notes
-
-* Uses scikit-learn’s `RandomForestRegressor` with `n_jobs=-1` to parallelize across CPU cores.
-* Suitable for distributed training by replacing with Spark MLlib’s `RandomForestRegressor` when handling larger-than-memory datasets.
-### ✅ Why Selected
-
-* Reduces overfitting via averaging across 100 trees
-* Handles nonlinearities naturally without requiring feature scaling
-* Provides built‑in feature importance which is invaluable when exploring large datasets
-* Robust to outliers and missing values, making it suitable for real-world big‑data where quality varies
-* Can be parallelized easily (each tree is independent), which aligns with distributed training on big data clusters
+to leverage **GPU acceleration**.
 
 ---
 
-## 3️⃣ Gradient Boosting Regressor
+## ✅ Why BPNN Was Selected
 
-### 🎯 Role
-
-Sequential error-correcting ensemble model.
-
-### ⚙ Configuration
-
-* 100 Estimators
-* Learning Rate: 0.1
-* Max Depth: 5
-
-### 🛠 Training Notes
-
-* Implemented using scikit-learn’s `GradientBoostingRegressor` for simplicity.
-* For big data, the same algorithm can be executed via Spark’s `GBTRegressor` or XGBoost’s distributed mode, enabling training on datasets that exceed a single machine’s memory.
-
-### ✅ Why Selected
-
-* Learns from residual errors sequentially, correcting mistakes of previous trees
-* High predictive power especially when data are abundant, typical in big‑data settings
-* Captures subtle performance variations that other algorithms might smooth over
-* Training can be performed in a distributed fashion using Spark MLlib or XGBoost’s own distributed mode, making it practical for larger datasets
+• Captures **nonlinear relationships** between features
+• Learns hidden interactions automatically
+• Effective for regression tasks
+• Scales well with increasing training data
+• Demonstrates deep learning integration in educational analytics
 
 ---
 
-## 4️⃣ Support Vector Regression (SVR)
+## 📊 Performance
 
-### 🎯 Role
+Typical performance:
 
-Kernel-based nonlinear regression.
-
-### ⚙ Configuration
-
-* Kernel: RBF
-* C = 100
-* Gamma = 0.01
-
-### 🛠 Training Notes
-
-* Leveraging scikit-learn’s `SVR` implementation. It is not inherently distributed; when dataset sizes grow, training is performed on stratified samples or with incremental learners like `SGDRegressor` using the kernel trick.
-### ✅ Why Selected
-
-* Effective in high-dimensional feature space, which can arise after encoding categorical attributes or generating interaction terms
-* Strong regularization capability (through the C parameter) helps prevent overfitting when many features are present
-* Captures nonlinear boundaries efficiently with the RBF kernel
-* Although SVR does not scale as well as tree ensembles, it serves as a complementary learner and can be applied on subsampled big data or in a streaming setting with incremental updates
+```
+RMSE : 3–4
+R² : 0.82 – 0.88
+```
 
 ---
 
-## 5️⃣ Linear Regression
+# 2️⃣ Random Forest Regressor
 
-### 🎯 Role
+## 🎯 Role
 
-Baseline interpretable linear model.
-
-### ⚙ Configuration
-
-* Ordinary Least Squares (OLS)
-
-### 🛠 Training Notes
-
-* Solved with a closed-form solution using NumPy’s linear algebra routines, which are fast even on large feature matrices. If the feature matrix becomes too large, uses iterative solvers (e.g. `sag` or `lsqr`) from scikit-learn.
-### ✅ Why Selected
-
-* Provides a computationally trivial baseline against which to measure other models
-* Fastest to train and score, useful when prototyping on large datasets or when low-latency predictions are required
-* Adds stability to ensemble by anchoring predictions to a linear relationship
-* Helps detect linear trends and data issues that more complex models might overlook
+Random Forest acts as a **bagging ensemble model** that improves stability and reduces variance.
 
 ---
 
-## 6️⃣ XGBoost Regressor
+## ⚙ Configuration
 
-### 🎯 Role
+```
+Number of Trees : 100
+Max Depth : 15
+Min Samples Split : 5
+Parallel Processing : Enabled
+```
 
-Optimized gradient boosting with advanced regularization.
+---
 
-### ⚙ Configuration
+## 🛠 Implementation
 
-* 100 Estimators
-* Learning Rate: 0.1
-* Max Depth: 5
-* Parallel Processing Enabled
+Implemented using **scikit-learn RandomForestRegressor** with:
 
-### 🛠 Training Notes
+```
+n_jobs = -1
+```
 
-* Uses the `xgboost` Python package with `nthread` set to the number of available cores.
-* Supports out‑of‑core training for very large datasets and can be run in distributed mode across a Spark or Hadoop cluster using `xgboost.spark`.
-### ✅ Why Selected
+This allows the model to use **all available CPU cores**.
 
-* High accuracy on structured/tabular data and often wins Kaggle competitions, making it ideal for big‑data regression tasks
-* Built-in L1/L2 regularization prevents overfitting on large feature sets
-* Efficient memory usage and support for out-of-core learning enables training on datasets that exceed RAM
-* Production-grade optimization (parallel tree construction, cache awareness) ensures the model can be trained across multiple machines on a Spark or Hadoop cluster
-* Serves as a drop‑in replacement for the Gradient Boosting Regressor when scaling beyond what scikit-learn comfortably handles
+For big-data environments, the model can be replaced with:
+
+**Spark MLlib RandomForestRegressor**
+
+---
+
+## ✅ Why Random Forest Was Selected
+
+• Reduces overfitting via tree averaging
+• Handles nonlinear relationships naturally
+• Requires minimal feature preprocessing
+• Robust to outliers and noisy data
+• Provides feature importance insights
+
+---
+
+## 📊 Performance
+
+Typical results:
+
+```
+RMSE : 2.5 – 3.5
+R² : 0.85 – 0.90
+```
+
+---
+
+# 3️⃣ XGBoost Regressor
+
+## 🎯 Role
+
+XGBoost is the **most powerful gradient boosting algorithm** used in the ensemble.
+
+---
+
+## ⚙ Configuration
+
+```
+Estimators : 100
+Learning Rate : 0.1
+Max Depth : 5
+Regularization : L1 + L2
+Parallel Threads : Enabled
+```
+
+---
+
+## 🛠 Implementation
+
+Implemented using the **XGBoost Python library**.
+
+Advantages include:
+
+• Efficient memory usage
+• Parallel tree construction
+• Built-in regularization
+• High performance on structured data
+
+---
+
+## ✅ Why XGBoost Was Selected
+
+• State-of-the-art algorithm for tabular datasets
+• Prevents overfitting using regularization
+• Highly optimized training process
+• Excellent predictive performance
+
+---
+
+## 📊 Performance
+
+```
+RMSE : 2 – 3
+R² : 0.88 – 0.92
+```
 
 ---
 
 # 🎯 Ensemble Strategy
 
-## Weighted Averaging Formula
+The final prediction is computed using **ensemble averaging**.
 
 ```
 Final Score =
-w1 × BPNN +
-w2 × RF +
-w3 × GB +
-w4 × SVR +
-w5 × LR +
-w6 × XGB
+( BPNN + RandomForest + XGBoost ) / 3
 ```
 
-### Weight Distribution (Based on Validation Performance)
+---
 
-| Model             | Weight |
-| ----------------- | ------ |
-| BPNN              | 17%    |
-| Random Forest     | 17%    |
-| Gradient Boosting | 16%    |
-| SVR               | 17%    |
-| Linear Regression | 17%    |
-| XGBoost           | 16%    |
+## Why Ensemble Learning?
 
-Total = 100%
+Ensemble learning improves prediction reliability because:
 
-### 🎯 Why Weighted Averaging?
+• Different models capture different patterns
+• Errors from one model are corrected by others
+• Variance and bias are reduced
 
-* Reduces model bias
-* Minimizes overfitting
-* Improves stability
-* Balances variance and bias
-* Ensures no single model dominates
+This results in **higher prediction accuracy and stability**.
 
 ---
 
 # 📊 Feature Design
 
-## 🏋️ Physical Attributes (0–100 Scale)
+The system uses **17 input features** divided into two categories.
+
+---
+
+# 🏋️ Physical Performance Metrics
+
+Measured on a **0–100 scale**.
 
 1. Attendance
 2. Endurance
@@ -297,37 +357,83 @@ Total = 100%
 
 ---
 
-## 🧠 Psychological & Social Indicators (2–9 Scale)
+# 🧠 Behavioral & Lifestyle Attributes
+
+Measured using **ordinal scoring scales**.
 
 8. Motivation
-9. Stress Level (Inverted)
-10. Self-Confidence
+9. Stress Level (inverted scale)
+10. Self Confidence
 11. Focus
 12. Teamwork
 13. Peer Support
 14. Communication
 15. Sleep Quality
 16. Nutrition
-17. Screen Time (Inverted)
+17. Screen Time (inverted)
 
 ---
 
-# 🔎 Explainable AI (SHAP Integration)
+# 🔍 Explainable AI System
 
-The system uses:
+Instead of heavy SHAP analysis, the system uses a **hybrid explainability mechanism**.
 
 ```
-shap.KernelExplainer()
+Feature Influence =
+Correlation Analysis
++
+Permutation Feature Importance
 ```
 
-### What SHAP Provides:
+---
 
-* Feature impact on prediction
-* Positive influencers
-* Negative factors
-* Transparent model reasoning
+## Benefits
 
-This transforms the system from a **black box** into an **interpretable AI system**.
+• Faster than SHAP
+• Scalable for big data
+• Identifies key performance drivers
+• Provides interpretable results
+
+---
+
+# 📄 Diagnostic Report
+
+The system generates a **structured diagnostic assessment report**.
+
+Example:
+
+```
+PHYSICAL EDUCATION DIAGNOSTIC REPORT
+
+Student Predicted Score : 78.6
+
+Top Strengths
+• Endurance
+• Strength
+• Participation
+
+Major Improvement Areas
+• Stress Level
+• Focus
+• Sleep Quality
+
+Primary Positive Influencer : Endurance
+Primary Negative Influencer : Stress Level
+```
+
+---
+
+# 🤖 Recommendation Engine
+
+The recommendation system provides **personalized coaching advice**.
+
+Example recommendations:
+
+• Increase aerobic endurance training
+• Improve sleep schedule for recovery
+• Participate in team-based drills
+• Reduce screen time before sleep
+• Follow a balanced nutrition routine
 
 ---
 
@@ -335,27 +441,31 @@ This transforms the system from a **black box** into an **interpretable AI syste
 
 ---
 
-## 🔹 Step 1: Data Preprocessing
+## Step 1 — Data Preprocessing
 
 ```
 python step2_preprocessing_spark.py
 ```
 
-Cleans, normalizes, splits dataset.
+Performs:
+
+• Data cleaning
+• Normalization
+• Dataset splitting
 
 ---
 
-## 🔹 Step 2: Feature Analysis (Optional)
+## Step 2 — Feature Analysis
 
 ```
 python step3_feature_analysis_spark.py
 ```
 
-Generates correlations & insights.
+Generates correlation insights.
 
 ---
 
-## 🔹 Step 3: Train BPNN
+## Step 3 — Train Neural Network
 
 ```
 python step4_bpnn_model.py
@@ -363,77 +473,50 @@ python step4_bpnn_model.py
 
 ---
 
-## 🔹 Step 4: Train Ensemble Models ⭐
+## Step 4 — Train Ensemble Models
 
 ```
 python step5_ensemble_ml_model.py
 ```
 
-Must run before predictions.
-
 ---
 
-## 🔹 Step 5: Full Diagnostic Prediction
+## Step 5 — Prediction & Diagnostics
 
 ```
 python prediction.py
 ```
 
-Includes:
+Produces:
 
-* SHAP explainability
-* Influencer identification
-* Personalized recommendations
-* Detailed report generation
-
----
-
-## 🔹 Step 6: Quick Prediction
-
-```
-python bpnn_predictor.py
-```
-
-Fast ensemble score only.
+• predicted score
+• feature importance
+• diagnostic report
+• recommendations
 
 ---
 
-## 🔹 Step 7: Model Evaluation
+# 📈 Model Evaluation
 
-```
-python model_evaluation.py
-```
+Evaluation metrics include:
 
-Displays:
-
-* RMSE
-* MAE
-* R²
-* Tolerance Accuracy
+| Metric             | Meaning                       |
+| ------------------ | ----------------------------- |
+| RMSE               | Root Mean Square Error        |
+| MAE                | Mean Absolute Error           |
+| R²                 | Variance Explained            |
+| Tolerance Accuracy | % predictions within ±5 score |
 
 ---
 
-# 📈 Performance Metrics Explained
+# 📊 Overall System Performance
 
-| Metric             | Meaning                | Interpretation              |
-| ------------------ | ---------------------- | --------------------------- |
-| RMSE               | Root Mean Square Error | Average squared error       |
-| MAE                | Mean Absolute Error    | Average absolute difference |
-| R²                 | Variance explained     | 0.88–0.92 = Strong          |
-| Tolerance Accuracy | % within ±5 marks      | 87–93% = Excellent          |
-
----
-
-# 🏆 Overall Performance
-
-| Metric             | Ensemble  | Single BPNN |
-| ------------------ | --------- | ----------- |
-| RMSE               | 2–3%      | 3–4%        |
-| MAE                | 1.5–2.5%  | 2–3%        |
-| R²                 | 0.88–0.92 | 0.82–0.88   |
-| Tolerance Accuracy | 87–93%    | 81–87%      |
-
-Ensemble improves prediction stability by 5–10%.
+| Metric             | Ensemble  | BPNN Only |
+| ------------------ | --------- | --------- |
+| RMSE               | 2–3       | 3–4       |
+| MAE                | 1.5–2.5   | 2–3       |
+| R²                 | 0.88–0.92 | 0.82–0.88 |
+| Tolerance Accuracy | 88–93%    | 82–87%    |
 
 ---
 
@@ -441,29 +524,32 @@ Ensemble improves prediction stability by 5–10%.
 
 ```
 Upgraded_model/
-├── preprocessing scripts
-├── model training scripts
-├── prediction engines
-├── evaluation module
-├── recommendation engine
-├── data/
-├── saved_model/
-├── visualizations/
+
+data/
+saved_model/
+visualizations/
+
+step2_preprocessing_spark.py
+step3_feature_analysis_spark.py
+step4_bpnn_model.py
+step5_ensemble_ml_model.py
+
+prediction.py
+bpnn_predictor.py
+model_evaluation.py
+recommendation_engine.py
 ```
 
 ---
 
 # ⚙️ Installation
 
-### Required
-
 ```
-pip install numpy pandas scikit-learn matplotlib shap xgboost
-```
-
-### Optional (Spark)
-
-```
+pip install numpy
+pip install pandas
+pip install scikit-learn
+pip install xgboost
+pip install matplotlib
 pip install pyspark
 ```
 
@@ -471,47 +557,48 @@ pip install pyspark
 
 # 🎓 Academic Contribution
 
-This system demonstrates:
+This project demonstrates:
 
-* Hybrid ML + Deep Learning integration
-* Multi-dimensional student performance modeling
-* Explainable AI in education analytics
-* Ensemble optimization strategy
-* Personalized recommendation automation
+• Big Data analytics in education
+• Ensemble machine learning design
+• Deep learning integration
+• Explainable AI techniques
+• Intelligent recommendation systems
 
 ---
 
 # ⚠️ Limitations
 
-* Performance depends on training data diversity
-* Psychological features may introduce variance
-* Requires retraining for different institutions
-* SHAP computation increases processing time
+• Performance depends on dataset quality
+• Behavioral attributes introduce variability
+• Requires retraining for new institutions
 
 ---
 
 # 🔮 Future Improvements
 
-* Auto-weight optimization via meta-learning
-* Web-based dashboard interface
-* Database integration
-* Real-time analytics
-* Larger cross-institutional datasets
+Future research directions include:
+
+• Web-based dashboard interface
+• Automated hyperparameter tuning
+• Meta-learning ensemble optimization
+• Integration with institutional databases
+• Real-time performance analytics
 
 ---
 
 # 🏁 Final Summary
 
-This system is:
+The **Physical Education Diagnostic Assessment System** is a scalable AI framework that transforms traditional PE grading into **data-driven performance analytics**.
 
-✔ Multi-model
-✔ Interpretable
-✔ Production-ready
-✔ Academically strong
-✔ Practically deployable
+The system is:
 
-It moves beyond simple PE grading into **intelligent performance diagnostics and personalized coaching analytics**.
+✔ Big-data ready
+✔ Ensemble-based
+✔ Explainable
+✔ Scalable
+✔ Research-oriented
+
+It provides institutions with a **powerful platform for evaluating student physical performance and delivering personalized training insights**.
 
 ---
-
-
