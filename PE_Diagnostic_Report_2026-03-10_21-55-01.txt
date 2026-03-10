@@ -1,0 +1,40 @@
+============================================================
+      PHYSICAL EDUCATION DIAGNOSTIC ASSESSMENT REPORT
+      Generated on: 2026-03-10 21:55:01
+============================================================
+
+--- CORE METRICS & DIAGNOSTICS ---
+FINAL SCORE              : 75.91%
+Primary Positive Influencer: Attendance
+Major Negative Factor    : Motivation
+------------------------------------------------------------
+
+--- USER INPUT DATA ---
+Attendance               : 68.0
+Endurance                : 68.0
+Strength                 : 68.0
+Flexibility              : 68.0
+Participation            : 68.0
+Skill Speed              : 68.0
+Physical Progress        : 68.0
+Motivation               : 4 (Low (Reluctant / Needs encouragement))
+Self Confidence          : 9 (High (Self-assured / Bold))
+Teamwork                 : 6 (Cooperative (Works well with peers))
+
+------------------------------------------------------------
+TOP STRENGTHS: Endurance, Strength, Flexibility
+FOCUS AREAS  : Attendance, Participation, Motivation, Stress Level, Self Confidence, Teamwork, Peer Support, Communication, Screen Time
+
+RECOMMENDED ACTION PLAN:
+• Let's work on improving that PE score.
+  Here are two coaching tips for you:.
+
+• Create a Pre-Class Routine: To boost your attendance, participation, and motivation, establish a consistent pre-class routine.
+  This could be as simple as arriving 10 minutes early to get changed, visualizing your goals, or doing some light stretching to get focused.
+  This routine will help you develop a positive mindset and get ready to engage fully in class.
+
+• Practice breathing or meditation for stress..
+
+
+============================================================
+END OF REPORT

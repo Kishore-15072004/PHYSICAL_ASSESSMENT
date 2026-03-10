@@ -1,317 +1,502 @@
 from datetime import datetime
 import numpy as np
 import os
-import shap
-import matplotlib.pyplot as plt
 import pickle
 from recommendation_engine import generate_recommendations
 
-# helper to build paths relative to this script
+# --------------------------------------------------
+# Helper for Relative Paths
+# --------------------------------------------------
+
 base_dir = os.path.dirname(os.path.abspath(__file__))
+
 def rel_path(*parts):
     return os.path.join(base_dir, *parts)
 
 # --------------------------------------------------
 # Load Ensemble Models
 # --------------------------------------------------
-print("\n[System] Loading ensemble models...")  # paths handled with rel_path
+
+print("\n[System] Loading ensemble models...")
+
 models_ensemble = {}
 ensemble_info = {}
 
 try:
-    # Load BPNN
+
+    # BPNN
     bpnn_model = np.load(rel_path("saved_model","bpnn_model.npz"), allow_pickle=True)
+
     W1_bpnn, b1_bpnn = bpnn_model["W1"], bpnn_model["b1"]
     W2_bpnn, b2_bpnn = bpnn_model["W2"], bpnn_model["b2"]
-    
-    # Load ML models
-    with open(rel_path("saved_model","ensemble","random_forest.pkl"), "rb") as f:
-        models_ensemble['rf'] = pickle.load(f)
-    with open(rel_path("saved_model","ensemble","gradient_boosting.pkl"), "rb") as f:
-        models_ensemble['gb'] = pickle.load(f)
-    with open(rel_path("saved_model","ensemble","svr.pkl"), "rb") as f:
-        models_ensemble['svr'] = pickle.load(f)
-    with open(rel_path("saved_model","ensemble","linear_regression.pkl"), "rb") as f:
-        models_ensemble['lr'] = pickle.load(f)
-    with open(rel_path("saved_model","ensemble","xgboost.pkl"), "rb") as f:
-        models_ensemble['xgb'] = pickle.load(f)
-    
-    # Load ensemble weights
-    with open(rel_path("saved_model","ensemble","ensemble_info.pkl"), "rb") as f:
+
+    # Random Forest
+    with open(rel_path("saved_model","ensemble","random_forest.pkl"),"rb") as f:
+        models_ensemble["rf"] = pickle.load(f)
+
+    # XGBoost
+    with open(rel_path("saved_model","ensemble","xgboost.pkl"),"rb") as f:
+        models_ensemble["xgb"] = pickle.load(f)
+
+    # Gradient Boost
+    with open(rel_path("saved_model","ensemble","gradient_boosting.pkl"),"rb") as f:
+        models_ensemble["gb"] = pickle.load(f)
+
+    # SVR
+    with open(rel_path("saved_model","ensemble","svr.pkl"),"rb") as f:
+        models_ensemble["svr"] = pickle.load(f)
+
+    # Linear Regression
+    with open(rel_path("saved_model","ensemble","linear_regression.pkl"),"rb") as f:
+        models_ensemble["lr"] = pickle.load(f)
+
+    with open(rel_path("saved_model","ensemble","ensemble_info.pkl"),"rb") as f:
         ensemble_info = pickle.load(f)
-    
-    print("✓ All ensemble models loaded successfully")
+
+    print("✓ Ensemble models loaded successfully")
+
 except FileNotFoundError as e:
-    print(f"❌ Error loading ensemble models: {e}")
-    print("   Please run step5_ensemble_ml_model.py first")
+    print("❌ Model loading failed:", e)
     exit()
 
 # --------------------------------------------------
-# Activation & Math
+# Activation Function
 # --------------------------------------------------
+
 def relu(x):
-    return np.maximum(0, x)
-
-# Math for the forward pass:
-# $$ \text{Hidden} = \text{ReLU}(X \cdot W_1 + b_1) $$
-# $$ \text{Output} = \text{Hidden} \cdot W_2 + b_2 $$
+    return np.maximum(0,x)
 
 # --------------------------------------------------
-# Feature configuration
+# Feature Configuration
 # --------------------------------------------------
+
 compulsory_features = [
-    ("attendance", 50, 100), ("endurance", 30, 95), ("strength", 35, 95),
-    ("flexibility", 30, 90), ("participation", 55, 100), ("skill_speed", 30, 95),
-    ("physical_progress", 40, 95),
+
+("attendance",50,100),
+("endurance",30,95),
+("strength",35,95),
+("flexibility",30,90),
+("participation",55,100),
+("skill_speed",30,95),
+("physical_progress",40,95)
+
 ]
 
 optional_features = [
-    ("motivation", 4, 9), ("stress_level", 2, 8), ("self_confidence", 4, 9),
-    ("focus", 3, 9), ("teamwork", 4, 9), ("peer_support", 5, 9),
-    ("communication", 4, 9), ("sleep_quality", 4, 9), ("nutrition", 4, 9),
-    ("screen_time", 2, 8),
+
+("motivation",4,9),
+("stress_level",2,8),
+("self_confidence",4,9),
+("focus",3,9),
+("teamwork",4,9),
+("peer_support",5,9),
+("communication",4,9),
+("sleep_quality",4,9),
+("nutrition",4,9),
+("screen_time",2,8)
+
 ]
 
-# Create a combined list for SHAP feature naming
+optional_defaults = {f[0]:6 for f in optional_features}
+
+# --------------------------------------------------
+# Feature Names for PFI
+# --------------------------------------------------
+
 feature_names = [f[0] for f in compulsory_features] + [f[0] for f in optional_features]
 
-optional_defaults = {f[0]: 6 for f in optional_features}
-optional_defaults["stress_level"] = 5
-optional_defaults["screen_time"] = 5
-
 # --------------------------------------------------
-# Collect inputs
+# Descriptive Mapping
 # --------------------------------------------------
-inputs = []
-user_inputs_dict = {}
 
-# Descriptive mapping for specific attributes
 descriptive_options = {
-    "stress_level": [
-        ("Low (Calm/Relaxed)", 2), 
-        ("Moderate (Manageable)", 5), 
-        ("High (Overwhelmed/Anxious)", 8)
-    ],
-    "sleep_quality": [
-        ("Poor (Less than 5 hours / Restless)", 4), 
-        ("Fair (5-7 hours / Average)", 6), 
-        ("Restorative (7-9+ hours / Deep)", 9)
-    ],
-    "screen_time": [
-        ("Mindful (Under 2 hours daily)", 3), 
-        ("Moderate (3-5 hours daily)", 5), 
-        ("Excessive (6+ hours daily)", 8)
-    ],
-    "nutrition": [
-        ("Poor (Processed foods/Inconsistent)", 4), 
-        ("Balanced (Healthy mix/Regular)", 6), 
-        ("Optimal (Nutrient-dense/High fuel)", 9)
-    ],
-    "focus": [
-        ("Distracted (Difficulty staying on task)", 4), 
-        ("Steady (Functional concentration)", 6), 
-        ("Sharp (High flow state)", 9)
-    ],
-    "communication": [
-        ("Passive (Minimal interaction)", 4), 
-        ("Clear (Effective exchanges)", 6), 
-        ("Proactive (Leadership/High engagement)", 9)
-    ],
-    "default": [
-        ("Developing", 4), 
-        ("Average", 6), 
-        ("Strong", 9)
-    ]
+
+"motivation":[
+("Low (Reluctant / Needs encouragement)",4),
+("Moderate (Participates when guided)",6),
+("High (Self-driven / Enthusiastic)",9)
+],
+
+"stress_level":[
+("Low (Calm / Relaxed)",2),
+("Moderate (Manageable)",5),
+("High (Overwhelmed / Anxious)",8)
+],
+
+"self_confidence":[
+("Low (Hesitant / Doubtful)",4),
+("Moderate (Occasionally confident)",6),
+("High (Self-assured / Bold)",9)
+],
+
+"focus":[
+("Distracted (Difficulty staying on task)",4),
+("Steady (Functional concentration)",6),
+("Sharp (High flow state)",9)
+],
+
+"teamwork":[
+("Developing (Needs guidance in groups)",4),
+("Cooperative (Works well with peers)",6),
+("Leadership (Guides and motivates team)",9)
+],
+
+"peer_support":[
+("Limited (Rare encouragement)",5),
+("Supportive (Encourages teammates)",7),
+("Highly Supportive (Actively uplifts others)",9)
+],
+
+"communication":[
+("Passive (Minimal interaction)",4),
+("Clear (Effective exchanges)",6),
+("Proactive (Leadership / High engagement)",9)
+],
+
+"sleep_quality":[
+("Poor (Less than 5 hours / Restless)",4),
+("Fair (5–7 hours / Average)",6),
+("Restorative (7–9+ hours / Deep)",9)
+],
+
+"nutrition":[
+("Poor (Processed foods / Inconsistent)",4),
+("Balanced (Healthy mix / Regular)",6),
+("Optimal (Nutrient-dense / High fuel)",9)
+],
+
+"screen_time":[
+("Mindful (Under 2 hours daily)",3),
+("Moderate (3–5 hours daily)",5),
+("Excessive (6+ hours daily)",8)
+
+]
+
 }
 
+# --------------------------------------------------
+# Collect Inputs
+# --------------------------------------------------
+
+inputs = []
+user_inputs_dict = {}
+user_inputs_display = {}
+selected_optional_attributes = []
+selected_labels = {}
+
 print("\n--- ENTER PHYSICAL ATTRIBUTES ---")
-for name, min_v, max_v in compulsory_features:
+
+for name,min_v,max_v in compulsory_features:
+
     while True:
+
         try:
+
             val = float(input(f"{name.replace('_',' ').title()} ({min_v}-{max_v}): "))
+
             if min_v <= val <= max_v:
+
                 inputs.append(val)
                 user_inputs_dict[name] = val
+                user_inputs_display[name] = val
                 break
-            print("❌ Out of range.")
-        except ValueError:
-            print("❌ Invalid input.")
+
+            print("❌ Out of range")
+
+        except:
+            print("❌ Invalid input")
+
+# --------------------------------------------------
+# Optional Inputs
+# --------------------------------------------------
 
 print("\n--- OPTIONAL ATTRIBUTES ---")
-for i, (name, _, _) in enumerate(optional_features, 1):
+
+for i,(name,_,_) in enumerate(optional_features,1):
     print(f"{i}. {name.replace('_',' ').title()}")
 
-choice = input("\nSelect numbers (e.g., 1,3,5) or Enter to skip: ").strip()
-selected = [int(i.strip()) for i in choice.split(",") if i.strip().isdigit()] if choice else []
+choice = input("\nSelect numbers (e.g.,1,3,5) or press Enter: ").strip()
 
-for idx, (name, min_v, max_v) in enumerate(optional_features, 1):
+selected = [int(i) for i in choice.split(",") if i.strip().isdigit()] if choice else []
+
+for idx,(name,_,_) in enumerate(optional_features,1):
+
     if idx in selected:
-        opts = descriptive_options.get(name, descriptive_options["default"])
-        print(f"\nHow would you describe your {name.replace('_',' ').title()}?")
-        for opt_idx, (label, _) in enumerate(opts, 1):
-            print(f"   {opt_idx}. {label}")
-        
+
+        selected_optional_attributes.append(name)
+
+        options = descriptive_options[name]
+
+        print(f"\n{name.replace('_',' ').title()}:")
+
+        for i,(label,val) in enumerate(options,1):
+            print(f"{i}. {label}")
+
         while True:
+
             try:
-                pick = int(input(f"Select choice (1-{len(opts)}): "))
-                if 1 <= pick <= len(opts):
-                    val = opts[pick-1][1]
+
+                pick = int(input("Select option: "))
+
+                if 1 <= pick <= len(options):
+
+                    label,val = options[pick-1]
+
+                    selected_labels[name] = label
+
                     inputs.append(val)
                     user_inputs_dict[name] = val
+                    user_inputs_display[name] = label
+
                     break
-                print(f"❌ Please select a number between 1 and {len(opts)}.")
-            except ValueError:
-                print("❌ Invalid input. Please enter a number.")
+
+                print("Invalid selection")
+
+            except:
+                print("Enter a number")
+
     else:
+
         val = optional_defaults[name]
         inputs.append(val)
         user_inputs_dict[name] = val
 
 # --------------------------------------------------
-# Prediction & Interpretability Logic
+# Normalize Input
 # --------------------------------------------------
-# Preparing data for the model
-X = np.array(inputs, dtype=float)
+
+X = np.array(inputs)
 X_norm = X.copy()
-X_norm[:7] /= 100.0  # Normalize physical
-X_norm[7:] /= 10.0   # Normalize psych/social
-X_norm = X_norm.reshape(1, -1)
 
-# Wrapper function for SHAP to interpret
+X_norm[:7] /= 100
+X_norm[7:] /= 10
+
+X_norm = X_norm.reshape(1,-1)
+
+# --------------------------------------------------
+# BPNN Prediction
+# --------------------------------------------------
+
 def model_predict(data):
-    hidden_layer = relu(np.dot(data, W1_bpnn) + b1_bpnn)
-    output_layer = (np.dot(hidden_layer, W2_bpnn) + b2_bpnn) * 100
-    return output_layer.flatten()
 
-# Generate predictions from all ensemble models
-print("[System] Generating ensemble predictions...")
+    hidden = relu(np.dot(data,W1_bpnn) + b1_bpnn)
+    output = (np.dot(hidden,W2_bpnn) + b2_bpnn) * 100
+
+    return output.flatten()
+
+# --------------------------------------------------
+# Hybrid Ensemble Prediction (used for PFI)
+# --------------------------------------------------
+
+def hybrid_predict(data):
+
+    y_bpnn = model_predict(data)[0]
+    y_rf = models_ensemble["rf"].predict(data)[0] * 100
+    y_xgb = models_ensemble["xgb"].predict(data)[0] * 100
+    y_gb = models_ensemble["gb"].predict(data)[0] * 100
+    y_svr = models_ensemble["svr"].predict(data)[0] * 100
+    y_lr = models_ensemble["lr"].predict(data)[0] * 100
+
+    preds = np.array([y_bpnn,y_rf,y_xgb,y_gb,y_svr,y_lr])
+
+    weights = ensemble_info.get(
+        "weights",
+        np.array([0.22,0.20,0.18,0.16,0.12,0.12])
+    )
+
+    return np.dot(weights,preds)
+
+# --------------------------------------------------
+# Hybrid Permutation Feature Importance
+# --------------------------------------------------
+
+def compute_hybrid_pfi(X, feature_names):
+
+    baseline = hybrid_predict(X)
+
+    importances = []
+
+    for i in range(X.shape[1]):
+
+        X_perm = X.copy()
+
+        np.random.shuffle(X_perm[:, i])
+
+        perm_score = hybrid_predict(X_perm)
+
+        importance = abs(baseline - perm_score)
+
+        importances.append(importance)
+
+    ranking = sorted(
+        zip(feature_names, importances),
+        key=lambda x: x[1],
+        reverse=True
+    )
+
+    return ranking
+
+# --------------------------------------------------
+# Ensemble Predictions
+# --------------------------------------------------
+
+print("\n[System] Generating ensemble predictions...")
+
 y_bpnn = model_predict(X_norm)[0]
-y_rf = models_ensemble['rf'].predict(X_norm)[0] * 100
-y_gb = models_ensemble['gb'].predict(X_norm)[0] * 100
-y_svr = models_ensemble['svr'].predict(X_norm)[0] * 100
-y_lr = models_ensemble['lr'].predict(X_norm)[0] * 100
-y_xgb = models_ensemble['xgb'].predict(X_norm)[0] * 100
+y_rf = models_ensemble["rf"].predict(X_norm)[0] * 100
+y_xgb = models_ensemble["xgb"].predict(X_norm)[0] * 100
+y_gb = models_ensemble["gb"].predict(X_norm)[0] * 100
+y_svr = models_ensemble["svr"].predict(X_norm)[0] * 100
+y_lr = models_ensemble["lr"].predict(X_norm)[0] * 100
 
-# Weighted ensemble prediction
-weights = ensemble_info.get('weights', np.array([0.2, 0.2, 0.2, 0.2, 0.2, 0.2]))
-predicted_score = np.clip(
-    weights[0] * y_bpnn +
-    weights[1] * y_rf +
-    weights[2] * y_gb +
-    weights[3] * y_svr +
-    weights[4] * y_lr +
-    weights[5] * y_xgb,
-    0, 100
+predictions = np.array([y_bpnn,y_rf,y_xgb,y_gb,y_svr,y_lr])
+
+weights = ensemble_info.get(
+    "weights",
+    np.array([0.22,0.20,0.18,0.16,0.12,0.12])
 )
 
-print("\n[System] Performing diagnostic analysis (SHAP)...")
-explainer = shap.KernelExplainer(model_predict, np.zeros((1, len(feature_names))))
-shap_values = explainer.shap_values(X_norm)
+predicted_score = np.clip(np.dot(weights,predictions),0,100)
 
-# Identify Key Influencers (Professional Terminology)
-indexed_shap = list(enumerate(shap_values[0]))
-indexed_shap.sort(key=lambda x: x[1], reverse=True)
+# --------------------------------------------------
+# Hybrid PFI Analysis
+# --------------------------------------------------
 
-primary_positive_influencer = feature_names[indexed_shap[0][0]].replace('_', ' ').title()
-major_negative_factor = feature_names[indexed_shap[-1][0]].replace('_', ' ').title()
+pfi_ranking = compute_hybrid_pfi(X_norm,feature_names)
+
+top_positive = pfi_ranking[:3]
+top_negative = pfi_ranking[-3:]
+
+primary_positive_influencer = top_positive[0][0].replace("_"," ").title()
+major_negative_factor = top_negative[-1][0].replace("_"," ").title()
 
 # --------------------------------------------------
 # Recommendations
 # --------------------------------------------------
-print("\n[System] Compiling your personalized coaching plan...")
-recs = generate_recommendations(user_inputs_dict, predicted_score)
+
+print("[System] Generating coaching recommendations...")
+
+recs,groq_status = generate_recommendations(user_inputs_dict,predicted_score)
+
+print(f"[Groq Status] {groq_status}")
 
 # --------------------------------------------------
-# Mapping for Descriptive Labels
+# Console Report
 # --------------------------------------------------
-def get_label(name, value):
-    labels = {
-        "stress_level": {2: "Low (Calm)", 5: "Moderate", 8: "High (Overwhelmed)"},
-        "sleep_quality": {4: "Poor (<5 hrs)", 6: "Fair (5-7 hrs)", 9: "Restorative (7-9+ hrs)"},
-        "screen_time": {3: "Mindful (<2 hrs)", 5: "Moderate (3-5 hrs)", 8: "Excessive (6+ hrs)"},
-        "nutrition": {4: "Poor", 6: "Balanced", 9: "Optimal"},
-        "focus": {4: "Distracted", 6: "Steady", 9: "Sharp"},
-        "communication": {4: "Passive", 6: "Clear", 9: "Proactive"},
-        "default": {4: "Developing", 5: "Moderate", 6: "Average", 9: "Strong"}
-    }
-    category = labels.get(name, labels["default"])
-    return category.get(value, str(value))
 
-# --------------------------------------------------
-# Final Unified Output (Console)
-# --------------------------------------------------
-print("\n" + "═" * 55)
-print("           STUDENT PERFORMANCE & DIAGNOSTIC REPORT")
-print("═" * 55)
-print(f" FINAL ASSESSMENT SCORE: {predicted_score:.2f}%")
-print("-" * 55)
-print(f"🚀 PRIMARY POSITIVE INFLUENCER: {primary_positive_influencer}")
-print(f"📉 MAJOR NEGATIVE FACTOR      : {major_negative_factor}")
-print("-" * 55)
+print("\n"+"="*55)
+print("STUDENT PERFORMANCE REPORT")
+print("="*55)
 
-if recs.get("strengths"):
-    print(f"⭐ TOP STRENGTHS: {', '.join(recs['strengths'])}")
+print("Final Score:",round(predicted_score,2),"%")
 
-if recs.get("weak_areas"):
-    print(f"🔍 FOCUS AREAS: {', '.join(recs['weak_areas'])}")
+print("\nTop Influencing Factors (Hybrid PFI):")
 
-print("\n📊 RECENT BEHAVIORAL SNAPSHOT:")
-for key in ["sleep_quality", "screen_time", "stress_level", "nutrition"]:
-    val = user_inputs_dict.get(key)
-    print(f"   • {key.replace('_',' ').title()}: {get_label(key, val)}")
+for name,_ in top_positive:
+    print("•",name.replace("_"," ").title())
 
-print("\n📋 RECOMMENDED ACTION STEPS:")
-if recs.get("recommendations"):
-    unique_recs = list(dict.fromkeys(recs["recommendations"]))
-    for tip in unique_recs:
-        print(f"   • {tip}")
-else:
-    print("   • Keep up the great work!")
+print("\nStrengths:",", ".join(recs["strengths"]))
+print("Weak Areas:",", ".join(recs["weak_areas"]))
 
-print("-" * 55)
-print("═" * 55)
+print("\nRecommendations:")
+
+for tip in recs.get("recommendations", []):
+
+    tip = tip.replace("**","")
+    parts = tip.split(". ")
+
+    first = True
+
+    for p in parts:
+
+        p = p.strip()
+
+        if not p:
+            continue
+
+        if first:
+            print("•", p + ".")
+            first = False
+        else:
+            print(" ", p + ".")
 
 # --------------------------------------------------
-# Save Detailed Report to Text File
+# Save Professional Report
 # --------------------------------------------------
-timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-filename = f"PE_Diagnostic_Report_{timestamp}.txt"
+
+timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+filename = f"PE_Diagnostic_Report_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.txt"
 
 try:
-    with open(filename, "w", encoding="utf-8") as f:
-        f.write("="*60 + "\n")
+
+    with open(filename,"w",encoding="utf-8") as f:
+
+        f.write("="*60+"\n")
         f.write("      PHYSICAL EDUCATION DIAGNOSTIC ASSESSMENT REPORT\n")
-        f.write(f"      Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-        f.write("="*60 + "\n\n")
+        f.write(f"      Generated on: {timestamp}\n")
+        f.write("="*60+"\n\n")
 
         f.write("--- CORE METRICS & DIAGNOSTICS ---\n")
-        f.write(f"FINAL SCORE               : {predicted_score:.2f}%\n")
-        f.write(f"Primary Positive Influencer: {primary_positive_influencer}\n")
-        f.write(f"Major Negative Factor     : {major_negative_factor}\n")
-        f.write("-" * 60 + "\n\n")
+
+        f.write(f"{'FINAL SCORE':<25}: {predicted_score:.2f}%\n")
+        f.write(f"{'Primary Positive Influencer':<25}: {primary_positive_influencer}\n")
+        f.write(f"{'Major Negative Factor':<25}: {major_negative_factor}\n")
+
+        f.write("\nTop Influencing Factors (Hybrid PFI):\n")
+
+        for name,_ in top_positive:
+            f.write(f"• {name.replace('_',' ').title()}\n")
+
+        f.write("-"*60+"\n\n")
 
         f.write("--- USER INPUT DATA ---\n")
-        for key, value in user_inputs_dict.items():
-            label = get_label(key, value) if key in [f[0] for f in optional_features] else ""
-            display_val = f"{value} ({label})" if label else value
-            f.write(f"{key.replace('_', ' ').title():<25}: {display_val}\n")
-        
-        f.write("\n" + "-"*60 + "\n")
+
+        for name,_,_ in compulsory_features:
+            val = user_inputs_dict[name]
+            f.write(f"{name.replace('_',' ').title():<25}: {val}\n")
+
+        for name in selected_optional_attributes:
+            val = user_inputs_dict[name]
+            label = selected_labels.get(name,"")
+            f.write(f"{name.replace('_',' ').title():<25}: {val} ({label})\n")
+
+        f.write("\n"+"-"*60+"\n")
+
         if recs.get("strengths"):
             f.write(f"TOP STRENGTHS: {', '.join(recs['strengths'])}\n")
-        
+
         if recs.get("weak_areas"):
             f.write(f"FOCUS AREAS  : {', '.join(recs['weak_areas'])}\n")
 
         f.write("\nRECOMMENDED ACTION PLAN:\n")
-        unique_recs = list(dict.fromkeys(recs.get("recommendations", [])))
-        for tip in unique_recs:
-            f.write(f"• {tip}\n")
 
-        f.write("\n" + "="*60 + "\n")
+        for tip in recs.get("recommendations",[]):
+
+            tip = tip.replace("**","")
+            parts = tip.split(". ")
+
+            first = True
+
+            for p in parts:
+
+                p = p.strip()
+
+                if not p:
+                    continue
+
+                if first:
+                    f.write(f"• {p}.\n")
+                    first = False
+                else:
+                    f.write(f"  {p}.\n")
+
+            f.write("\n")
+
+        f.write("\n"+"="*60+"\n")
         f.write("END OF REPORT\n")
 
-    print(f"\n✅ Detailed diagnostic report saved as: {filename}")
+    print(f"\n✅ Report saved as: {filename}")
 
 except Exception as e:
+
     print(f"\n❌ Error saving report: {e}")

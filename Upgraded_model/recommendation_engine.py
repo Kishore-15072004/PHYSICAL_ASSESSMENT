@@ -1,75 +1,120 @@
 import os
-import os
 import random
 from dotenv import load_dotenv
 
 try:
     from groq import Groq
-except Exception:
-    Groq = None
+except:
+    Groq=None
 
 load_dotenv()
 
 class RecommendationEngine:
+
     def __init__(self):
-        groq_key = os.getenv("GROQ_API_KEY")
-        self.client = Groq(api_key=groq_key) if (Groq is not None and groq_key) else None
-        self.thresholds = {
-            "attendance": 80, "endurance": 60, "strength": 60, "flexibility": 55,
-            "participation": 70, "skill_speed": 60, "physical_progress": 60,
-            "motivation": 6, "stress_level": 6, "sleep_quality": 6, "nutrition": 6
-        }
-        self.STATIC_DATA = {
-            "endurance": "Perform 20 minutes of light jogging 3x per week.",
-            "strength": "Complete 3 sets of bodyweight squats and push-ups 2x per week.",
-            "flexibility": "Follow a 10-minute dynamic stretching routine every morning.",
-            "stress_level": "Practice 'Box Breathing' (4s inhale, 4s hold, 4s exhale) during study breaks.",
-            "attendance": "Use a digital planner to set reminders 15 minutes before PE sessions.",
-            "nutrition": "Prioritize a high-protein breakfast to sustain energy."
+
+        key=os.getenv("GROQ_API_KEY")
+
+        self.client=Groq(api_key=key) if (Groq and key) else None
+
+        self.thresholds={
+        "attendance":80,
+        "endurance":60,
+        "strength":60,
+        "flexibility":55,
+        "participation":70,
+        "skill_speed":60,
+        "physical_progress":60,
+        "motivation":6,
+        "stress_level":6,
+        "sleep_quality":6,
+        "nutrition":6,
+        "focus":6
         }
 
-    def analyze_profile(self, user_inputs):
-        strengths, all_weak = [], []
-        for feature, val in user_inputs.items():
-            threshold = self.thresholds.get(feature, 60)
-            is_weak = val >= threshold if feature == "stress_level" else val < threshold
-            if is_weak:
-                all_weak.append(feature)
+        self.static_tips={
+        "endurance":"Jog or cycle 20 minutes three times weekly.",
+        "strength":"Practice push-ups and squats twice weekly.",
+        "flexibility":"Follow a 10-minute stretching routine daily.",
+        "stress_level":"Practice breathing or meditation for stress.",
+        "nutrition":"Include protein, fruits and vegetables daily.",
+        "sleep_quality":"Maintain 7-9 hours sleep each night."
+        }
+
+    def analyze(self,inputs):
+
+        strengths=[]
+        weak=[]
+
+        for k,v in inputs.items():
+
+            th=self.thresholds.get(k,60)
+
+            if k=="stress_level":
+                condition=v>=th
             else:
-                strengths.append(feature)
-        return strengths[:2], all_weak
+                condition=v<th
 
-    def generate(self, user_inputs, predicted_score):
-        strengths, weak_keys = self.analyze_profile(user_inputs)
+            if condition:
+                weak.append(k)
+            else:
+                strengths.append(k)
 
-        # 1. Get AI Tips (optional)
-        ai_tips = []
-        if self.client and weak_keys:
-            try:
-                prompt = f"PE Score: {predicted_score}%. Weaknesses: {weak_keys}. Give 2 FITT tips. No intro, no numbers, one per line."
-                chat = self.client.chat.completions.create(
-                    messages=[{"role": "system", "content": "You are a PE coach."}, {"role": "user", "content": prompt}],
-                    model="llama-3.3-70b-versatile",
-                    temperature=0.5,
-                )
-                raw_lines = chat.choices[0].message.content.strip().split('\n')
-                ai_tips = [line.lstrip("1234567890. -*").strip() for line in raw_lines if len(line) > 10]
-            except Exception:
-                ai_tips = []  # Fallback to static only
+        return strengths[:3],weak
 
-        # 2. Get Static Tips
-        static_tips = [self.STATIC_DATA[k] for k in weak_keys if k in self.STATIC_DATA]
-        random.shuffle(static_tips)
+    def ai_recommend(self,weak,score):
 
-        # 3. Merge top tips
-        final_list = ai_tips[:2] + static_tips[:2]
+        if not self.client or not weak:
+            return [],"Groq unavailable or no weaknesses detected"
+
+        try:
+
+            prompt=f"Student PE score {score}%. Weak areas {weak}. Give two short coaching tips."
+
+            chat=self.client.chat.completions.create(
+
+            messages=[
+            {"role":"system","content":"You are a PE coach"},
+            {"role":"user","content":prompt}
+            ],
+
+            model="llama-3.3-70b-versatile",
+            temperature=0.5)
+
+            lines=chat.choices[0].message.content.split("\n")
+
+            tips=[l.strip("-•1234567890. ") for l in lines if len(l)>10]
+
+            return tips[:2],"Groq AI recommendations fetched successfully"
+
+        except:
+
+            return [],"Groq request failed — using fallback tips"
+
+    def generate(self,inputs,score):
+
+        strengths,weak=self.analyze(inputs)
+
+        ai_tips,status=self.ai_recommend(weak,score)
+
+        static=[self.static_tips[k] for k in weak if k in self.static_tips]
+
+        random.shuffle(static)
+
+        recs=list(dict.fromkeys(ai_tips+static[:3]))
+
+        if not recs:
+            recs=["Maintain current training and gradually increase intensity."]
 
         return {
-            "strengths": [s.replace('_', ' ').title() for s in strengths],
-            "weak_areas": [w.replace('_', ' ').title() for w in weak_keys],
-            "recommendations": final_list
-        }
+        "strengths":[s.replace("_"," ").title() for s in strengths],
+        "weak_areas":[w.replace("_"," ").title() for w in weak],
+        "recommendations":recs
+        },status
 
 
-def generate_recommendations(user_inputs, predicted_score=0):
-    return RecommendationEngine().generate(user_inputs, predicted_score)
+def generate_recommendations(inputs,score=0):
+
+    engine=RecommendationEngine()
+
+    return engine.generate(inputs,score)

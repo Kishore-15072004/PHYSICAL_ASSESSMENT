@@ -1,0 +1,45 @@
+============================================================
+      PHYSICAL EDUCATION DIAGNOSTIC ASSESSMENT REPORT
+      Generated on: 2026-03-10 22:05:50
+============================================================
+
+--- CORE METRICS & DIAGNOSTICS ---
+FINAL SCORE              : 75.50%
+Primary Positive Influencer: Attendance
+Major Negative Factor    : Screen Time
+
+Top Influencing Factors (Hybrid PFI):
+• Attendance
+• Endurance
+• Strength
+------------------------------------------------------------
+
+--- USER INPUT DATA ---
+Attendance               : 69.0
+Endurance                : 68.0
+Strength                 : 68.0
+Flexibility              : 68.0
+Participation            : 68.0
+Skill Speed              : 68.0
+Physical Progress        : 68.0
+Motivation               : 6 (Moderate (Participates when guided))
+Focus                    : 4 (Distracted (Difficulty staying on task))
+Peer Support             : 7 (Supportive (Encourages teammates))
+
+------------------------------------------------------------
+TOP STRENGTHS: Endurance, Strength, Flexibility
+FOCUS AREAS  : Attendance, Participation, Stress Level, Self Confidence, Focus, Teamwork, Peer Support, Communication, Screen Time
+
+RECOMMENDED ACTION PLAN:
+• Let's work on improving that PE score.
+  Here are two short coaching tips for you:.
+
+• Improve attendance and participation: Make a commitment to attend every PE class and participate fully in all activities.
+  Set a goal to arrive on time and be ready to engage in each lesson.
+  This will help you develop a sense of responsibility and teamwork, which will also boost your self-confidence and focus.
+
+• Practice breathing or meditation for stress..
+
+
+============================================================
+END OF REPORT
