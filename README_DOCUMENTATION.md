@@ -1,473 +1,497 @@
-# 📖 Documentation Index - Physical Education Assessment System
-
-## Welcome! 👋
-
-This document guides you through all available documentation for your **Physical Education Assessment System**.
-
-**Choose your starting point below:**
 
 ---
 
-## 🎯 By Role / Need
+# 📖 Documentation Index – Physical Education Diagnostic Assessment System (v3.0)
 
-### 👨‍💼 **Project Manager / Stakeholder**
-→ **START HERE:** [EXECUTIVE_SUMMARY.md](EXECUTIVE_SUMMARY.md)
-- What does the system do?
-- Quick statistics & performance
-- Key achievements
-- Next steps
+## Welcome 👋
 
-**Time:** 5 minutes
+This documentation index helps you navigate the **AI-powered Physical Education Diagnostic Assessment System**.
 
----
+The system:
 
-### 👨‍💻 **Software Engineer / Developer**
-→ **START HERE:** [CODE_ANALYSIS.md](CODE_ANALYSIS.md)
-- Line-by-line code walkthrough
-- Data flow & algorithms
-- Architecture decisions
-- Design patterns
-
-**Then:** [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md)
-- System diagrams
-- Training process details
-- Mathematical formulas
-
-**Time:** 30 minutes total
+✔ Predicts **student PE performance scores**
+✔ Explains **key influencing factors using Hybrid Explainable AI**
+✔ Provides **personalized coaching recommendations**
+✔ Uses **Machine Learning + Big Data preprocessing**
 
 ---
 
-### 🚀 **DevOps / Production Engineer**
-→ **START HERE:** [USAGE_GUIDE.md](USAGE_GUIDE.md)
-- Installation & setup
-- Running the system
-- Troubleshooting
-- Deployment options
+# 🎯 Choose Your Starting Point
 
-**Then:** [ARCHITECTURE_GUIDE.md](ARCHITECTURE_GUIDE.md#training-process-flow)
-- Training pipeline overview
+## 👨‍💼 Project Manager / Stakeholder
 
-**Time:** 15 minutes
+Start here:
 
----
+**EXECUTIVE_SUMMARY.md**
 
-### 🎓 **Student / Learning**
-→ **START HERE:** [EXECUTIVE_SUMMARY.md](EXECUTIVE_SUMMARY.md#-learning-outcomes)
-- Core concepts explained
-- Technology stack overview
+This document explains:
 
-**Then:** [CODE_ANALYSIS.md](CODE_ANALYSIS.md) - Read in order:
-1. Data Pipeline (foundation)
-2. Base Model (simpler to understand)
-3. Upgraded Model (advanced concepts)
-4. Ensemble Methods (ensemble learning)
+* system goals
+* capabilities
+* performance overview
+* architecture highlights
+* future roadmap
 
-**Time:** 1-2 hours
+**Reading Time:** 5 minutes
 
 ---
 
-### 🔧 **System Administrator**
-→ **START HERE:** [USAGE_GUIDE.md](USAGE_GUIDE.md#installation)
-- Setup instructions
-- Dependency management
-- Troubleshooting
+# 👨‍💻 Software Engineer / Developer
 
-**Performance Tips:** [USAGE_GUIDE.md](USAGE_GUIDE.md#performance-tips)
+Start here:
 
-**Time:** 10 minutes
+### 1️⃣ CODE_ANALYSIS.md
 
----
+Learn:
 
-## 📚 Document Reference
+* project structure
+* data pipeline
+* model training
+* prediction workflow
+* recommendation logic
 
-### 1. EXECUTIVE_SUMMARY.md (2 min read)
-**What it covers:**
-- 🎯 System purpose in one sentence
-- 📊 Key statistics at a glance  
-- 🔹 Two implementations compared
-- 🧠 Core technologies
-- 💡 Strengths & weaknesses
-- 🚀 Quick start (3 steps)
+Then read:
 
-**Best for:** Getting oriented, stakeholder updates
+### 2️⃣ ARCHITECTURE_GUIDE.md
 
----
+Contains:
 
-### 2. CODE_ANALYSIS.md (15 min read)
-**What it covers:**
-- 📁 Complete project structure
-- 🔍 File-by-file code explanation:
-  - Base model (7 features, 1 BPNN)
-  - Upgraded model (17 features, 6-model ensemble)
-- 🧠 Algorithm details with math
-- 📈 Model performance summary
-- 🔗 File dependencies
-- ✅ Code quality assessment
+* system diagrams
+* training pipeline
+* neural network explanation
+* hybrid explainability logic
 
-**Best for:** Understanding the codebase deeply
+**Reading Time:** ~30 minutes
 
 ---
 
-### 3. ARCHITECTURE_GUIDE.md (10 min read)
-**What it covers:**
-- 📊 System architecture diagrams
-- 🔄 Data flow visualizations
-- 🧠 Neural network structure
-- 🎨 Ensemble combination
-- ⚙️ Training process flowcharts
-- 📝 Example prediction walkthrough
-- 📊 Visualizations generated
-- ⚡ Hyperparameter summary
+# 🚀 DevOps / Deployment Engineer
 
-**Best for:** Visual learners, system designers
+Start here:
 
----
+### USAGE_GUIDE.md
 
-### 4. USAGE_GUIDE.md (10 min read)
-**What it covers:**
-- 🚀 Installation & setup
-- 🎯 4 usage scenarios (quick → advanced)
-- 📖 Feature definitions (all 17 explained)
-- 💻 API reference (code examples)
-- 🆘 Troubleshooting (10 common issues + fixes)
-- ⚡ Performance optimization tips
-- 🎛️ Customization guide
-- 🌐 Deployment options
+Includes:
 
-**Best for:** Actually using the system
+* installation steps
+* dependency setup
+* running the system
+* troubleshooting errors
+* deployment methods
+
+Then review:
+
+ARCHITECTURE_GUIDE.md → Training Pipeline
+
+**Reading Time:** 15 minutes
 
 ---
 
-## 🗺️ Learning Path
+# 🎓 Student / Learning Path
 
-### Path 1: Executive Overview (15 minutes)
-```
-1. EXECUTIVE_SUMMARY.md (read all)
-   ↓
-2. You understand: What it does, why it matters, quick stats
-```
+Start with:
 
-### Path 2: Developer Quick Start (45 minutes)
-```
-1. EXECUTIVE_SUMMARY.md (skim)
-   ↓
-2. CODE_ANALYSIS.md → Data Pipeline section
-3. CODE_ANALYSIS.md → Base Model section (simpler to understand)
-4. ARCHITECTURE_GUIDE.md → System Architecture Diagram
-5. USAGE_GUIDE.md → Installation + Scenario 1
-   ↓
-6. You can: Run predictions, understand the pipeline
-```
+EXECUTIVE_SUMMARY.md
 
-### Path 3: Deep Technical Understanding (2-3 hours)
-```
-1. EXECUTIVE_SUMMARY.md (read all)
-   ↓
-2. CODE_ANALYSIS.md (read all sections in order)
-   - Start with Data Pipeline
-   - Then Base Model (simpler)
-   - Then Upgraded Model (advanced)
-   - Finally Ensemble Methods
-   ↓
-3. ARCHITECTURE_GUIDE.md (read all sections)
-   - Study diagrams
-   - Follow training process flows
-   - Study example walkthrough
-   ↓
-4. USAGE_GUIDE.md (read all sections)
-   - All 4 scenarios
-   - API reference
-   - Customization guide
-   ↓
-5. Hands-on: Run each script, modify hyperparameters
-   ↓
-6. You understand: Every line of code, can modify system
-```
+You will learn:
 
-### Path 4: Production Deployment (1 hour)
-```
-1. USAGE_GUIDE.md → Installation (5 min)
-   ↓
-2. USAGE_GUIDE.md → Scenario 1 & 2 (10 min)
-   ↓
-3. USAGE_GUIDE.md → Troubleshooting (10 min)
-   ↓
-4. USAGE_GUIDE.md → Deployment Options (10 min)
-   ↓
-5. USAGE_GUIDE.md → Performance Tips (5 min)
-   ↓
-6. You can: Install, run, optimize, and deploy
-```
+* Machine Learning pipeline
+* Big Data processing
+* Ensemble model design
+* Explainable AI
+
+Then read:
+
+CODE_ANALYSIS.md
+
+Recommended order:
+
+1. Data pipeline
+2. Feature engineering
+3. Model training
+4. Ensemble prediction
+5. Recommendation system
+
+**Learning Time:** 1–2 hours
 
 ---
 
-## 🔍 Find Topics Fast
+# 📚 Documentation Files
 
-### By File/Component
+## 1️⃣ EXECUTIVE_SUMMARY.md
 
-| Component | File/Location | Learn from |
-|-----------|---------------|-----------|
-| Data Preprocessing | `step2_preprocessing_spark.py` | CODE_ANALYSIS → Base Model |
-| Feature Analysis | `step3_feature_analysis_spark.py` | CODE_ANALYSIS → Base Model |
-| BPNN Training | `step4_bpnn_model.py` | CODE_ANALYSIS → Base Model |
-| Ensemble Training | `step5_ensemble_ml_model.py` | CODE_ANALYSIS → Upgraded Model |
-| Inference | `prediction.py` | CODE_ANALYSIS → Upgraded Model |
-| Recommendations | `recommendation_engine.py` | CODE_ANALYSIS → Upgraded Model |
-| Evaluation | `model_evalutation.py` | CODE_ANALYSIS → Upgraded Model |
+Provides a **high-level overview**.
 
-### By Concept
+Includes:
 
-| Concept | Where to Learn |
-|---------|----------------|
-| Neural Networks | ARCHITECTURE_GUIDE → Neural Network Architecture |
-| Ensemble Methods | CODE_ANALYSIS → Ensemble ML Model |
-| Feature Engineering | CODE_ANALYSIS → Preprocessing |
-| SHAP Explanations | CODE_ANALYSIS → Prediction (section) |
-| Model Evaluation | ARCHITECTURE_GUIDE → Model Performance Comparison |
-| Backpropagation Math | ARCHITECTURE_GUIDE → Training Process Flow |
-| Using Groq LLM | CODE_ANALYSIS → Recommendation Engine |
-| Spark Processing | CODE_ANALYSIS → Preprocessing |
+* system purpose
+* key statistics
+* feature explanation
+* ML models used
+* strengths and improvements
 
-### By Question
+Best for:
 
-| Question | Answer in |
-|----------|-----------|
-| "What models does this use?" | EXECUTIVE_SUMMARY → Model Performance |
-| "How accurate is it?" | EXECUTIVE_SUMMARY → Quick Statistics |
-| "How do I run it?" | USAGE_GUIDE → Scenario 1 |
-| "How do I retrain?" | USAGE_GUIDE → Scenario 3 |
-| "What's the input data format?" | USAGE_GUIDE → Feature Definitions |
-| "How do I fix [error]?" | USAGE_GUIDE → Common Issues |
-| "How do I customize it?" | USAGE_GUIDE → Customization Guide |
-| "What's the architecture?" | ARCHITECTURE_GUIDE → System Architecture Diagram |
-| "How does the neural network work?" | ARCHITECTURE_GUIDE → Neural Network Architecture |
-| "What's the data flow?" | CODE_ANALYSIS → Data Pipeline Flow |
+✔ understanding system quickly
+✔ project presentations
+✔ stakeholder briefings
 
 ---
 
-## 📊 Key Statistics Summary
+# 2️⃣ CODE_ANALYSIS.md
 
-For quick reference without reading full docs:
+Deep technical explanation of the **entire codebase**.
+
+Covers:
+
+### Project Structure
 
 ```
-✨ SYSTEM FACTS
-├─ Models: 6 (1 Deep Learning + 5 Traditional ML)
-├─ Features: 17 (7 physical + 10 psychological)
-├─ Accuracy: R² = 0.815 (Linear Regression best)
-├─ Ensemble: R² = 0.811 (more robust)
-├─ Prediction Error: ±2.99 on 0-100 scale
-├─ Code Files: 10+
-├─ Programming Language: Python 3.10+
-├─ Big Data: Apache Spark 3.3+
-└─ Status: ✅ Production Ready
+Physical_Assessment/
+│
+├── base_model/
+│   ├── preprocessing
+│   ├── BPNN model
+│
+├── Upgraded_model/
+│   ├── Spark preprocessing
+│   ├── BPNN training
+│   ├── Ensemble models
+│   ├── Hybrid feature importance
+│   ├── Recommendation engine
+│
+└── prediction.py
+```
 
-🚀 QUICK PATHS
-├─ Install: 3 commands, 2 minutes
-├─ First Prediction: 30 seconds
-├─ Retrain BPNN: 2 minutes
-├─ Full Retrain: 10 minutes
-└─ Deploy: REST API / Streamlit / CLI
+### Components Explained
 
-📈 MODEL RANKINGS
-1. Linear Regression: 0.815 ⭐ Best
-2. BPNN: 0.812
-3. Ensemble Top 3: 0.811
-4. SVR: 0.782
-5. XGBoost: 0.742
-6. Gradient Boosting: 0.740
-7. Random Forest: 0.679
+| Component                       | Purpose                         |
+| ------------------------------- | ------------------------------- |
+| step2_preprocessing_spark.py    | Feature generation              |
+| step3_feature_analysis_spark.py | Correlation analysis            |
+| step4_bpnn_model.py             | Neural network training         |
+| step5_ensemble_ml_model.py      | RandomForest + XGBoost training |
+| prediction.py                   | Prediction pipeline             |
+| recommendation_engine.py        | AI coaching system              |
+
+---
+
+# 3️⃣ ARCHITECTURE_GUIDE.md
+
+Explains **how the system works internally**.
+
+Includes:
+
+### System Architecture
+
+```
+Student Input
+     │
+     ▼
+Spark Data Processing
+     │
+     ▼
+Feature Engineering
+     │
+     ▼
+ML Models
+(BPNN + RF + XGBoost)
+     │
+     ▼
+Ensemble Prediction
+     │
+     ▼
+Hybrid Explainability
+(Correlation + PFI)
+     │
+     ▼
+Diagnostic Report
+     │
+     ▼
+Recommendation Engine
 ```
 
 ---
 
-## 🎓 Concept Glossary
+### Neural Network Architecture
 
-**Terms explained in:**
-
-- **BPNN / Backpropagation:** CODE_ANALYSIS → Base Model → Step 4
-- **Ensemble Learning:** CODE_ANALYSIS → Upgraded Model → Step 5
-- **Gradient Descent:** ARCHITECTURE_GUIDE → Training Process Flow
-- **ReLU Activation:** ARCHITECTURE_GUIDE → Neural Network Architecture
-- **SHAP Explainability:** CODE_ANALYSIS → Prediction
-- **Min-Max Scaling:** CODE_ANALYSIS → Preprocessing
-- **R² Score:** EXECUTIVE_SUMMARY → Model Performance
-- **RMSE/MAE Metrics:** ARCHITECTURE_GUIDE → Hyperparameter Summary
-
----
-
-## 🔗 Cross-References
-
-### Within Documents:
-
-**In CODE_ANALYSIS.md:**
-- Line numbers reference specific code
-- Math equations for algorithms
-- Links to visualization files
-
-**In ARCHITECTURE_GUIDE.md:**
-- Diagrams explain data flow
-- Example walkthrough shows prediction step-by-step
-- Formulas in LaTeX format
-
-**In USAGE_GUIDE.md:**
-- Command examples for each scenario
-- Code snippets for API usage
-- File paths for different OS
-
-**In EXECUTIVE_SUMMARY.md:**
-- Model comparison table
-- Feature explanation table
-- Quick reference summary
-
----
-
-## 📝 How to Use Examples
-
-### Running Commands
-
-All commands in USAGE_GUIDE assume:
-```bash
-# Windows
-cd c:\Users\kisho\PythonProjects\Physical_Assessment\Upgraded_model
-
-# macOS/Linux
-cd ~/PythonProjects/Physical_Assessment/Upgraded_model
+```
+Input Layer (17 features)
+        │
+        ▼
+Hidden Layer (16 neurons)
+ReLU Activation
+        │
+        ▼
+Output Layer (1 neuron)
+PE Score Prediction
 ```
 
-### Python Code Snippets
+---
 
-Examples are ready-to-run. Just:
-1. Copy the code
-2. Adjust file paths if needed
-3. Run in Python interactive shell or script
+### Hybrid Explainability System
 
-### Diagrams
+Instead of SHAP, the system now uses:
 
-All ASCII diagrams in ARCHITECTURE_GUIDE can be:
-- Copy-pasted into markdown
-- Recreated in draw.io or Miro
-- Used as reference for custom diagrams
+```
+Feature Influence =
+Correlation Score
++
+Permutation Feature Importance
+```
+
+This identifies:
+
+* strongest positive factor
+* strongest negative factor
+* feature importance ranking
 
 ---
 
-## ✅ Pre-Flight Checklist
+# 4️⃣ USAGE_GUIDE.md
 
-Before using the system, ensure:
+Practical guide for using the system.
 
-- [ ] Python 3.10+ installed (`python --version`)
-- [ ] pip available (`pip --version`)
-- [ ] Virtual environment created (optional but recommended)
-- [ ] Dependencies installed (`pip install -r requirements.txt`)
-- [ ] Trained models present (or run training steps)
-- [ ] Read at least USAGE_GUIDE → Installation section
+Includes:
 
----
+### Installation
 
-## 🆘 FAQ - Where to Find Answers
-
-**Q: How do I install the system?**
-A: USAGE_GUIDE → Installation
-
-**Q: I got an error. How do I fix it?**
-A: USAGE_GUIDE → Common Issues & Solutions
-
-**Q: How does the neural network work?**
-A: ARCHITECTURE_GUIDE → Neural Network Architecture
-
-**Q: What are the 17 features?**
-A: USAGE_GUIDE → Feature Definitions
-
-**Q: Can I customize the models?**
-A: USAGE_GUIDE → Customization Guide
-
-**Q: How accurate is it?**
-A: EXECUTIVE_SUMMARY → Quick Statistics
-
-**Q: Can I deploy it?**
-A: USAGE_GUIDE → Deployment Options
-
-**Q: How do I retrain?**
-A: USAGE_GUIDE → Scenario 3
-
-**Q: Why 6 models instead of 1?**
-A: EXECUTIVE_SUMMARY → Model Performance section or CODE_ANALYSIS → Ensemble Model section
-
-**Q: What's the data flow?**
-A: CODE_ANALYSIS → Data Pipeline Flow
+```
+pip install -r requirements.txt
+```
 
 ---
 
-## 📞 Quick Support
+### Running the System
 
-| Issue | Solution Location |
-|-------|------------------|
-| Installation problem | USAGE_GUIDE → Installation + Common Issues |
-| Model loading error | USAGE_GUIDE → Common Issues → Issue 1 |
-| Slow performance | USAGE_GUIDE → Performance Tips |
-| Wrong predictions | CODE_ANALYSIS → Feature Definitions |
-| Need custom features | USAGE_GUIDE → Customization Guide |
-| Want to understand code | CODE_ANALYSIS (read all) |
-| Want to deploy | USAGE_GUIDE → Deployment Options |
+```
+python prediction.py
+```
 
----
+System will ask for inputs:
 
-## 📚 Recommended Reading Order
+```
+Attendance:
+Endurance:
+Strength:
+Flexibility:
+Participation:
+Skill Speed:
+Physical Progress:
+```
 
-### For First-Time Users:
-1. **EXECUTIVE_SUMMARY.md** (5 min)
-   - Goal: Understand what this is
-   
-2. **USAGE_GUIDE.md → Installation** (5 min)
-   - Goal: Get it running
-   
-3. **USAGE_GUIDE.md → Scenario 1** (5 min)
-   - Goal: Make first prediction
-   
-4. **ARCHITECTURE_GUIDE.md → System Architecture** (5 min)
-   - Goal: Visualize the system
-
-**Total: 20 minutes to get started** ✅
-
-### For Deep Learning:
-1. **EXECUTIVE_SUMMARY.md** (all, 5 min)
-2. **CODE_ANALYSIS.md** (all, 20 min)
-3. **ARCHITECTURE_GUIDE.md** (all, 15 min)
-4. **USAGE_GUIDE.md** (all, 15 min)
-5. **Hands-on:** Run scripts, modify code
-
-**Total: 2-3 hours to master** 🎓
+Then optional attributes.
 
 ---
 
-## 💡 Pro Tips
+### Descriptive Attribute Inputs
 
-1. **Start small:** Use base_model first (faster, simpler)
-2. **Read diagrams first:** Skim ARCHITECTURE_GUIDE before deep code reading
-3. **Run it first:** Execute prediction.py before reading CODE_ANALYSIS
-4. **Reference as you code:** Keep USAGE_GUIDE open while developing
-5. **Bookmark this file:** It's your navigation hub
+Instead of confusing numbers, users choose **descriptive options**.
 
----
+Example:
 
-## 📈 Updates & Versions
-
-- **System Version:** 2.0 (Upgraded Model with Ensemble)
-- **Documentation Version:** 1.0
-- **Last Updated:** March 10, 2026
-- **Status:** ✅ Complete and Production-Ready
+```
+Focus
+1. Distracted (Difficulty staying on task)
+2. Steady (Functional concentration)
+3. Sharp (High flow state)
+```
 
 ---
 
-## 🎯 Next Actions
+# 🔍 Find Topics Quickly
 
-Choose one:
+## By Component
 
-- **Fast track (30 min):** EXECUTIVE_SUMMARY → USAGE_GUIDE → Run prediction.py
-- **Thorough (2 hours):** Read all 4 docs in order → Experiment with code
-- **Specific task:** Use "Find Topics Fast" section above, jump to relevant doc
+| Component             | File                            |
+| --------------------- | ------------------------------- |
+| Data Preprocessing    | step2_preprocessing_spark.py    |
+| Feature Analysis      | step3_feature_analysis_spark.py |
+| Neural Network        | step4_bpnn_model.py             |
+| Ensemble Training     | step5_ensemble_ml_model.py      |
+| Prediction System     | prediction.py                   |
+| Recommendation Engine | recommendation_engine.py        |
 
 ---
 
-**Happy learning! 🚀**
+# 📊 Key System Statistics
 
-Start with [EXECUTIVE_SUMMARY.md](EXECUTIVE_SUMMARY.md) if unsure where to begin.
+```
+SYSTEM OVERVIEW
+────────────────────────────
+Models Used : 3
+Features : 17
+Input Types : Physical + Psychological
+Explainability : Hybrid (Correlation + PFI)
+Prediction Range : 0 – 100
+Language : Python
+Big Data Processing : Apache Spark
+```
+
+---
+
+# 🤖 Machine Learning Models
+
+The system uses **three complementary models**.
+
+| Model         | Role                       |
+| ------------- | -------------------------- |
+| BPNN          | nonlinear pattern learning |
+| Random Forest | robust decision trees      |
+| XGBoost       | high accuracy boosting     |
+
+Final score is computed using **ensemble averaging**.
+
+---
+
+# 📊 Input Features
+
+## Physical Metrics (7)
+
+| Feature           |
+| ----------------- |
+| Attendance        |
+| Endurance         |
+| Strength          |
+| Flexibility       |
+| Participation     |
+| Skill Speed       |
+| Physical Progress |
+
+---
+
+## Behavioral Metrics (10)
+
+| Feature         |
+| --------------- |
+| Motivation      |
+| Stress Level    |
+| Self Confidence |
+| Focus           |
+| Teamwork        |
+| Peer Support    |
+| Communication   |
+| Sleep Quality   |
+| Nutrition       |
+| Screen Time     |
+
+---
+
+# 🧾 Diagnostic Report Output
+
+Example:
+
+```
+PHYSICAL EDUCATION DIAGNOSTIC ASSESSMENT REPORT
+
+Final Score : 75.5 %
+
+Primary Positive Influencer : Endurance
+Major Negative Factor : Focus
+
+TOP STRENGTHS
+• Endurance
+• Strength
+• Flexibility
+
+FOCUS AREAS
+• Stress Level
+• Focus
+• Teamwork
+```
+
+---
+
+# 💡 Recommendation Engine
+
+Recommendations are generated using:
+
+1️⃣ **Groq LLM (if API available)**
+2️⃣ **Fallback coaching tips**
+
+Example output:
+
+```
+RECOMMENDED ACTION PLAN
+
+• Practice breathing exercises to reduce stress
+• Participate in team drills regularly
+• Improve sleep routine for recovery
+• Set small weekly physical fitness goals
+```
+
+---
+
+# 🧠 Concept Glossary
+
+| Term     | Meaning                        |
+| -------- | ------------------------------ |
+| BPNN     | Backpropagation Neural Network |
+| Ensemble | Combining multiple models      |
+| PFI      | Permutation Feature Importance |
+| ReLU     | Activation function            |
+| R²       | Model accuracy metric          |
+| RMSE     | Prediction error               |
+
+---
+
+# 🗺️ Learning Paths
+
+## Quick Start (20 minutes)
+
+1️⃣ EXECUTIVE_SUMMARY
+2️⃣ USAGE_GUIDE
+3️⃣ Run prediction.py
+
+---
+
+## Deep Technical Understanding
+
+1️⃣ EXECUTIVE_SUMMARY
+2️⃣ CODE_ANALYSIS
+3️⃣ ARCHITECTURE_GUIDE
+4️⃣ USAGE_GUIDE
+5️⃣ Experiment with code
+
+---
+
+# ⚙️ System Requirements
+
+Minimum:
+
+```
+Python 3.10+
+Apache Spark 3.3+
+scikit-learn
+xgboost
+numpy
+pandas
+```
+
+---
+
+# 📈 System Version
+
+```
+System Version : 3.0
+Documentation Version : 2.0
+Last Updated : March 2026
+Status : Production Ready
+```
+
+---
+
+# 🎯 Recommended Next Step
+
+Start here:
+
+👉 **EXECUTIVE_SUMMARY.md**
+
+Then run:
+
+```
+python prediction.py
+```
+
+---
+
